@@ -82,6 +82,7 @@ export async function POST(request: NextRequest) {
     model: 'meta-llama/Llama-3-70b-chat-hf',
   });
   const careers = chatCompletion.choices[0].message.content;
+  console.log('Raw OpenAI Response:', careers);
 
   const careerInfoJSON = JSON.parse(careers!);
 
