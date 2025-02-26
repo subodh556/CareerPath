@@ -133,6 +133,7 @@ export async function POST(request: NextRequest) {
           model: 'meta-llama/Llama-3-70b-chat-hf',
         });
         const specificCareer = completion.choices[0].message.content;
+        console.log('Raw together Response:', specificCareer);
         const specificCareerJSON = JSON.parse(specificCareer!);
 
         const individualCareerInfo = { ...career, ...specificCareerJSON };
