@@ -224,6 +224,12 @@
         }),
       });
 
+      if (!response2.ok) {
+        console.error('Failed to fetch');
+        setLoading(false);
+        notify();
+        return;
+      }
 
       let data2 = await response2.json();
       setCareerInfo(data2);

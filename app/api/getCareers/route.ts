@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
   const { resumeInfo, context } = (await request.json()) as GetCareersRequest;
 
   const chatCompletion = await together.chat.completions.create({
+    stream:true,
     messages: [
       {
         role: 'system',
@@ -81,7 +82,10 @@ export async function POST(request: NextRequest) {
     ],
     model: 'meta-llama/Llama-3-70b-chat-hf',
   });
-  const careers = chatCompletion.choices[0].message.content;
+  let careers = '';
+  for await (const chunk of chatCompletion) {
+    careers += chunk.choices[0].delta.content || '';
+  }
   console.log('Raw OpenAI Response:', careers);
 
   const careerInfoJSON = JSON.parse(careers!);
